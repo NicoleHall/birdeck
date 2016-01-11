@@ -10,13 +10,33 @@ $(document).ready(function(){
   }
 
   $.ajax({ type: 'GET',
-           url: 'https://turing-birdie.herokuapp.com/api/v1/posts.json',
-           success: function(posts){
-            $.each(posts, function(index, post){
-              renderPost(post)
-            })
-           }
-        })
+         url: 'https://turing-birdie.herokuapp.com/api/v1/posts.json',
+         success: function(posts){
+          $.each(posts, function(index, post){
+            renderPost(post)
+          })
+         }
+      })
+
+  $('#create-post').on('click', function(){
+
+    var postParams = { post: { description: $('#post-description').val()} }
+
+    $.ajax({
+      type: 'POST',
+      url: 'https://turing-birdie.herokuapp.com/api/v1/posts.json',
+      data: postParams,
+      success: function(newPost){
+        renderPost(newPost)
+      },
+      error: function(xhr){
+        console.log(xhr.responseText)
+      }
+    })
+
+
+
+  })
 
 
 })

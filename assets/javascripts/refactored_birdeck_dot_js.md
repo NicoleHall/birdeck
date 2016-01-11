@@ -1,6 +1,7 @@
 $(document).ready(function() {
   fetchPosts()
   fetchPostsButton()
+  pollData()
   createPost()
   deletePost()
 })
@@ -20,7 +21,7 @@ function renderPost(post) {
 }
 
 function fetchPostsButton() {
-  $("[name='button-fetch']").on("click", function(){
+  $("#button-fetch-posts").on("click", function(){
     fetchPosts()
     })
 }
@@ -44,6 +45,10 @@ function fetchPosts() {
   })
 }
 
+function pollData() {
+  setInterval(fetchPosts, 5000)
+}
+
 function createPost() {
   $("#create-post").on("click", function() {
     var postParams = {
@@ -58,7 +63,6 @@ function createPost() {
       data:    postParams,
       success: function(newPost) {
         renderPost(newPost)
-        $("#post-description").val("")
       },
       error: function(xhr) {
         console.log(xhr.responseText)

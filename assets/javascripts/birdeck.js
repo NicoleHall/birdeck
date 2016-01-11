@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  pollData
 
   function renderPost(post){
     $('#latest-posts').append(
@@ -65,5 +66,8 @@ $(document).ready(function(){
   })
 
 
-
 })
+
+function pollData() {
+  setInterval(fetchPosts, 5000)
+}

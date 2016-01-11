@@ -2,10 +2,10 @@ $(document).ready(function(){
 
   function renderPost(post){
     $('#latest-posts').append(
-      "<div class='post'><h6>Posted at: " +
+      "<div class='post' data-id='" + post.id + "'><h6>Posted at: " +
        post.created_at +
        "</h6><p>"+ post.description +
-       "</p></div>"
+       "</p><button id='delete-post' name='button-fetch' class='btn btn-default btn-xs'>Delete</button></div>"
       )
   }
 
@@ -34,9 +34,24 @@ $(document).ready(function(){
       }
     })
 
-
-
   })
+
+
+  $('#latest-posts').delegate('#delete-post', 'click', function(){
+    var $post = $(this).closest('.post')
+
+    $.ajax({
+      type: 'DELETE',
+      url: 'https://turing-birdie.herokuapp.com/api/v1/posts/' + $post.attr('data-id') + '.json',
+      success: function(){
+        $post.remove()
+      },
+      error: function(xhr){
+        console.log(xhr.responseText)
+      }
+    })
+  })
+
 
 
 })
